@@ -80,23 +80,44 @@ jobs:
               print('already patched')
           EOF
       - run: chmod +x android/gradlew
-      - run: ./gradlew assembleRelease
-        working-directory: android
-      - name: Sign release APK
-        run: |
-          echo "$ANDROID_KEYSTORE_BASE64" | base64 --decode > /tmp/smh.keystore
-          BT=$(ls "$ANDROID_HOME/build-tools" | tail -1)
-          UNSIGNED=$(ls android/app/build/outputs/apk/release/*-unsigned.apk android/app/build/outputs/apk/release/*.apk 2>/dev/null | head -1)
-          echo "Unsigned: $UNSIGNED | build-tools: $BT"
-          "$ANDROID_HOME/build-tools/$BT/zipalign" -p 4 "$UNSIGNED" /tmp/app-aligned.apk
-          "$ANDROID_HOME/build-tools/$BT/apksigner" sign --ks /tmp/smh.keystore --ks-pass "$KEYSTORE_PASSWORD" --key-pass "$KEY_PASSWORD" --out Tabrik-SMH-Android.apk /tmp/app-aligned.apk
-          ls -la Tabrik-SMH-Android.apk
-          "$ANDROID_HOME/build-tools/$BT/apksigner" verify --print-certs Tabrik-SMH-Android.apk
-          echo SIGNED-OK
+      - name: Decode keystore
+        run: echo "$ANDROID_KEYSTORE_BASE64" | base64 --decode > /tmp/smh.keystore
         env:
           ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+      - name: Inject release signing (Gradle)
+        run: |
+          grep -n -A8 'buildTypes' android/app/build.gradle | head -20
+          python3 - <<'EOF'
+          import re
+          p = 'android/app/build.gradle'
+          s = open(p, encoding='utf-8').read()
+          block = '''signingConfigs {
+                  release {
+                      storeFile file(System.getenv("SMH_KEYSTORE") ?: "/tmp/smh.keystore")
+                      storePassword System.getenv("KEYSTORE_PASSWORD")
+                      keyAlias System.getenv("KEY_ALIAS")
+                      keyPassword System.getenv("KEY_PASSWORD")
+                  }
+              }
+              '''
+          s2, n = re.subn(r'(buildTypes\s*\{\s*release\s*\{)', block + r'\1\n            signingConfig signingConfigs.release', s, count=1)
+          assert n == 1, 'signing pattern not found'
+          open(p, 'w', encoding='utf-8').write(s2)
+          print('signing patched')
+          EOF
+      - run: ./gradlew assembleRelease
+        working-directory: android
+        env:
+          SMH_KEYSTORE: /tmp/smh.keystore
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+      - name: Verify + publish APK
+        run: |
+          BT=$(ls "$ANDROID_HOME/build-tools" | tail -1)
+          ls -la android/app/build/outputs/apk/release/
+          cp android/app/build/outputs/apk/release/app-release.apk Tabrik-SMH-Android.apk
+          "$ANDROID_HOME/build-tools/$BT/apksigner" verify --print-certs Tabrik-SMH-Android.apk
       - uses: actions/upload-artifact@v4
         with:
           name: Tabrik-SMH-Android-Release
