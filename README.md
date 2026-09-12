@@ -12,7 +12,7 @@
 T.1/
   shared/        → هسته مشترک: index.html (کارت‌ساز کامل) + about.html (صفحه About فوق‌زیبا)
   windows/       → لانچر پایتون + bat + Electron
-  android/       → WebView + راهنمای APK/PWA
+  android-native/ → WebView + پلاگین پرداخت بازار + راهنمای APK/PWA
   FEATURES_RESEARCH_200.md → ۲۰۰ قابلیت استخراج‌شده از رقبا (Canva، Hallmark…)
   FEATURES_IDEAS_200.md    → ۲۰۰ ایده اختصاصی
 ```
