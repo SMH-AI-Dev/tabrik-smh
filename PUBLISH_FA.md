@@ -14,7 +14,7 @@
 ```
 cd windows
 npm install
-npm run dist        # خروجی: windows/dist/Tabrik-SMH-Portable.exe
+npm run dist:win    # خروجی: windows/dist/Tabrik-SMH-Portable.exe
 ```
 بدون npm هم: `Tabrik-SMH.bat` (اجرا با پایتون، بدون نصب).
 
