@@ -1,14 +1,31 @@
 // ===== تبریک‌ساز SMH — سیستم درآمدی (پرمیوم • تبلیغات • واترمارک) =====
 // نقطه‌های اتصال واقعی بازار/مایکت/تپسل/زرین‌پال اینجاست — مستندات: MONETIZATION_FA.md
 const Premium = {
+  // شناسه‌های واقعی پنل کافه‌بازار/مایکت را اینجا می‌گذاریم (از کاربر گرفته می‌شود)
+  SKUS: { monthly: 'vip_monthly', yearly: 'vip_yearly', forever: 'vip_forever' },
   isVIP() { return localStorage.getItem('smh_vip') === '1'; },
   open() { $('#vipModal').classList.remove('hidden'); },
   close() { $('#vipModal').classList.add('hidden'); },
+  _unlock(msg) {
+    localStorage.setItem('smh_vip', '1');
+    this.close(); this.badge();
+    toast(msg || '👑 پرمیوم فعال شد! خوش بگذره! 🎉');
+  },
 
   // --- درگاه‌های پرداخت (استاب؛ در WebView فروشگاهی با کتابخانه بازار/مایکت پر می‌شود) ---
-  pay(via, plan) {
+  async pay(via, plan) {
+    plan = plan || 'yearly';
+    const sku = this.SKUS[plan];
     const PRICES = { monthly: '۳۹٬۰۰۰', yearly: '۲۹۹٬۰۰۰', forever: '۴۹۹٬۰۰۰' };
-    console.log('[PAY]', { via, plan, price: PRICES[plan] });
+    console.log('[PAY]', { via, plan, sku, price: PRICES[plan] });
+    // مسیر نیتیو بازار (وقتی پلاگین Capacitor وصل شد)
+    if (via === 'bazaar' && window.BazaarBilling && window.BazaarBilling.purchase) {
+      toast('💳 اتصال به پرداخت بازار…');
+      try {
+        const r = await window.BazaarBilling.purchase(sku);
+        if (r && r.ok) { this._unlock('✅ خرید بازار تأیید شد! 👑'); return; }
+      } catch (e) { toast('❌ خرید انجام نشد.'); return; }
+    }
     // بازار:  CafeBazaar IAB  → BillingClient.purchase(sku)
     // مایکت:  Myket IAB       → MyketBilling.purchase(sku)
     // وب:     ZarinPal        → window.open('https://www.zarinpal.com/...')
