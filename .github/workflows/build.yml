@@ -89,7 +89,7 @@ jobs:
           UNSIGNED=$(ls android/app/build/outputs/apk/release/*-unsigned.apk android/app/build/outputs/apk/release/*.apk 2>/dev/null | head -1)
           echo "Unsigned: $UNSIGNED | build-tools: $BT"
           "$ANDROID_HOME/build-tools/$BT/zipalign" -p 4 "$UNSIGNED" /tmp/app-aligned.apk
-          "$ANDROID_HOME/build-tools/$BT/apksigner" sign --ks /tmp/smh.keystore --ks-pass:pass:"$KEYSTORE_PASSWORD" --key-pass:pass:"$KEY_PASSWORD" --out Tabrik-SMH-Android.apk /tmp/app-aligned.apk
+          "$ANDROID_HOME/build-tools/$BT/apksigner" sign --ks /tmp/smh.keystore --ks-pass "$KEYSTORE_PASSWORD" --key-pass "$KEY_PASSWORD" --out Tabrik-SMH-Android.apk /tmp/app-aligned.apk
           ls -la Tabrik-SMH-Android.apk
           "$ANDROID_HOME/build-tools/$BT/apksigner" verify --print-certs Tabrik-SMH-Android.apk
           echo SIGNED-OK
