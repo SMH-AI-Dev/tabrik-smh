@@ -1,0 +1,9 @@
+node_modules/
+windows/dist/
+windows/node_modules/
+android/
+android-app/
+*.keystore
+__pycache__/
+.DS_Store
+Thumbs.db

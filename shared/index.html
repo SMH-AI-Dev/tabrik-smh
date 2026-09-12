@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#7c3aed">
+<meta name="description" content="تبریک‌ساز SMH — ساخت کارت تبریک دیجیتال با عکس، متن، موسیقی و افکت | ویندوز و اندروید">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="about.css">
+<title>🎉 تبریک‌ساز SMH | ساخت کارت تبریک دیجیتال</title>
+</head>
+<body>
+<div class="bg-orbs"><span></span><span></span><span></span></div>
+
+<header class="topbar">
+  <div class="brand">
+    <div class="logo">🎊</div>
+    <div>
+      <h1 class="anim-glow">تبریک‌ساز SMH</h1>
+      <p class="anim-fade">عکس • متن • موسیقی • افکت | ویندوز و اندروید</p>
+    </div>
+  </div>
+  <nav class="nav">
+    <button class="nav-btn active" data-tab="maker">🎨 سازنده</button>
+    <button class="nav-btn" data-tab="templates">🖼️ قالب‌ها</button>
+    <button class="nav-btn" data-tab="texts">💌 گنجینه متن</button>
+    <button class="nav-btn" data-tab="samples">💯 نمونه‌کارت‌ها</button>
+    <button class="nav-btn" data-tab="photos">📷 عکس‌ها</button>
+    <button class="nav-btn" data-tab="gallery">📁 کارت‌های من</button>
+    <button class="nav-btn vip-btn" id="btnVipTop">💎 پرمیوم</button>
+    <a class="nav-btn about-link" href="about.html">✨ درباره سازنده</a>
+  </nav>
+</header>
+
+<main>
+  <!-- ===== سازنده ===== -->
+  <section id="tab-maker" class="tab active">
+    <div class="layout">
+      <!-- پیش‌نمایش کارت -->
+      <div class="preview-wrap">
+        <div class="preview-toolbar">
+          <button id="btnPresent" class="btn ghost">📺 ارائه تمام‌صفحه</button>
+          <button id="btnSurprise" class="btn ghost">🎁 سورپرایز</button>
+          <label class="sound-toggle">🔊 موسیقی <input type="checkbox" id="musicOn" checked></label>
+        </div>
+        <div id="card" class="card theme-birthday">
+          <div id="cardBg" class="card-bg"></div>
+          <img id="cardBgImg" class="card-bg-img" alt="">
+          <div id="stickerLayer" class="sticker-layer"></div>
+          <div class="card-inner">
+            <img id="cardPhoto" class="card-photo hidden" alt="عکس شما">
+            <h2 id="cardTitle" class="card-title anim-text-typing">تولدت مبارک! 🎂</h2>
+            <p id="cardMsg" class="card-msg">امروز، روز توست! بدرخش، بخند و بهترین‌ها را زندگی کن. 🎈</p>
+            <div id="cardSign" class="card-sign">با عشق، از طرف من 💜</div>
+          </div>
+          <div class="card-shine"></div>
+          <canvas id="fxCanvas" title="بزن روش، آتش‌بازی می‌شود! 🎆"></canvas>
+        </div>
+        <div class="preview-actions">
+          <button id="btnPNG" class="btn primary">⬇️ خروجی PNG</button>
+          <button id="btnPrint" class="btn">🖨️ چاپ</button>
+          <button id="btnShare" class="btn">📤 اشتراک</button>
+          <button id="btnSave" class="btn gold">💾 ذخیره کارت</button>
+        </div>
+        <audio id="audioEl" loop></audio>
+      </div>
+
+      <!-- پنل کنترل -->
+      <div class="panel">
+        <div class="card-box">
+          <h3>🎭 مناسبت</h3>
+          <select id="occasion">
+            <option value="birthday">🎂 تولد</option>
+            <option value="nowruz">🌸 نوروز</option>
+            <option value="yalda">🍉 یلدا</option>
+            <option value="valentine">❤️ ولنتاین / سپندارمذگان</option>
+            <option value="wedding">💍 عروسی</option>
+            <option value="mother">🤱 روز مادر</option>
+            <option value="father">👨‍👧 روز پدر</option>
+            <option value="teacher">📚 روز معلم</option>
+            <option value="grad">🎓 فارغ‌التحصیلی</option>
+            <option value="baby">👶 نوزاد</option>
+            <option value="eid">🌙 عید فطر / قربان</option>
+            <option value="thanks">🙏 تشکر</option>
+            <option value="getwell">🌿 عیادت / سلامتی</option>
+            <option value="condolence">🕊️ تسلیت</option>
+          </select>
+          <div id="templateRow" class="chip-row"></div>
+        </div>
+
+        <div class="card-box">
+          <h3>🖼️ عکس و پس‌زمینه</h3>
+          <input type="file" id="photoInput" accept="image/*" class="file">
+          <input type="file" id="bgInput" accept="image/*" class="file">
+          <div class="row">
+            <button class="btn sm" id="btnPhotoUp">📷 افزودن عکس</button>
+            <button class="btn sm" id="btnBgUp">🌄 عکس پس‌زمینه</button>
+            <button class="btn sm danger" id="btnClearImg">🧹 پاک‌کردن</button>
+          </div>
+          <label>قاب عکس:
+            <select id="frameStyle">
+              <option value="none">بدون قاب</option>
+              <option value="circle">⭕ دایره‌ای</option>
+              <option value="heart">❤️ قلبی (CSS)</option>
+              <option value="polaroid">📸 پولاروید</option>
+              <option value="gold">🏆 طلایی</option>
+            </select>
+          </label>
+          <label>اندازه عکس <input type="range" id="photoSize" min="60" max="260" value="150"></label>
+          <div class="row">
+            <label>چرخش <input type="range" id="photoRot" min="-45" max="45" value="0"></label>
+            <label>شفافیت <input type="range" id="photoOp" min="20" max="100" value="100"></label>
+          </div>
+          <label>رنگ پس‌زمینه <input type="color" id="bgColor" value="#7c3aed"></label>
+          <div class="chip-row" id="bgRow"></div>
+        </div>
+
+        <div class="card-box">
+          <h3>✍️ متن کارت</h3>
+          <input id="inTitle" value="تولدت مبارک! 🎂" placeholder="تیتر کارت">
+          <textarea id="inMsg" rows="3" placeholder="متن تبریک…">امروز، روز توست! بدرخش، بخند و بهترین‌ها را زندگی کن. 🎈</textarea>
+          <input id="inSign" value="با عشق، از طرف من 💜" placeholder="امضا">
+          <div class="row">
+            <select id="fontSel">
+              <option value="Vazirmatn, Tahoma">وزیرمتن (پیش‌فرض)</option>
+              <option value="Tahoma">تهماه</option>
+              <option value="'B Nazanin', Tahoma">نازنین</option>
+              <option value="'Segoe UI', Tahoma">مدرن</option>
+              <option value="cursive">دست‌نویس</option>
+            </select>
+            <input type="color" id="textColor" value="#ffffff" title="رنگ متن">
+            <input type="range" id="textSize" min="18" max="64" value="34" title="اندازه تیتر">
+          </div>
+          <label>انیمیشن متن:
+            <select id="textAnim">
+              <option value="anim-text-typing">⌨️ تایپینگ</option>
+              <option value="anim-text-glow">✨ درخشش</option>
+              <option value="anim-text-wave">🌊 موجی</option>
+              <option value="anim-text-float">🎈 شناور</option>
+              <option value="anim-text-rainbow">🌈 رنگین‌کمانی</option>
+            </select>
+          </label>
+          <div class="row">
+            <label class="chk">🌑 سایه متن <input type="checkbox" id="textShadow" checked></label>
+            <label class="chk">💡 هاله نورانی <input type="checkbox" id="textHalo"></label>
+            <label class="chk">🖍️ هایلایت پشت متن <input type="checkbox" id="textHi"></label>
+          </div>
+          <div class="row">
+            <label>ضخامت دورخط <input type="range" id="textStroke" min="0" max="3" step="0.5" value="0"></label>
+            <label>فاصله خطوط <input type="range" id="textLH" min="14" max="30" value="19"></label>
+          </div>
+          <button class="btn sm" id="btnTTS">🔈 خوانش صوتی متن</button>
+        </div>
+
+        <div class="card-box" id="layersBox">
+          <h3>🧅 لایه‌ها و انتخاب دقیق</h3>
+          <p class="hint">💡 روی هر استیکر داخل کارت بزن تا انتخاب شود، بعد با لغزنده‌ها جابه‌جاش کن.</p>
+          <div id="layerList" class="layer-list"></div>
+          <div id="selPanel" class="sel-panel hidden">
+            <h4 id="selTitle">استیکر انتخاب‌شده</h4>
+            <label>موقعیت افقی <input type="range" id="selX" min="0" max="92" value="40"></label>
+            <label>موقعیت عمودی <input type="range" id="selY" min="0" max="88" value="30"></label>
+            <label>اندازه <input type="range" id="selS" min="20" max="100" value="40"></label>
+            <div class="row">
+              <button class="btn sm" id="selUp">⬆️ بیار جلو</button>
+              <button class="btn sm" id="selDown">⬇️ ببر عقب</button>
+              <button class="btn sm" id="selDup">📋 تکثیر</button>
+              <button class="btn sm danger" id="selDel">🗑️ حذف</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-box">
+          <h3>😍 استیکر متحرک</h3>
+          <div class="chip-row" id="stickerRow"></div>
+          <button class="btn sm danger" id="btnClearSticker">پاک‌کردن استیکرها</button>
+        </div>
+
+        <div class="card-box">
+          <h3>✨ افکت جادویی</h3>
+          <div class="chip-row" id="fxRow"></div>
+          <label>شدت بارش <input type="range" id="fxIntensity" min="20" max="200" value="90"></label>
+          <button class="btn sm" id="btnFire">🎆 آتش‌بازی!</button>
+        </div>
+
+        <div class="card-box">
+          <h3>🎵 موسیقی</h3>
+          <input type="file" id="musicInput" accept="audio/*" class="file">
+          <div class="row">
+            <button class="btn sm" id="btnMusicFile">🎶 آهنگ خودم</button>
+            <button class="btn sm" id="btnMelody">🎹 ملودی تولد (ساخت خودکار)</button>
+            <button class="btn sm" id="btnRecord">🎤 ضبط وویس تبریک</button>
+          </div>
+          <label>بلندی صدا <input type="range" id="vol" min="0" max="100" value="70"></label>
+          <p class="hint">💡 روی ویندوز و اندروید: فایل MP3 انتخاب کن یا ملودی خودکار را پخش کن.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== قالب‌ها ===== -->
+  <section id="tab-templates" class="tab">
+    <h2 class="sec-title anim-text-glow">🖼️ گالری قالب‌های آماده</h2>
+    <div id="galleryTemplates" class="tpl-grid"></div>
+  </section>
+
+  <!-- ===== گنجینه متن ===== -->
+  <section id="tab-texts" class="tab">
+    <h2 class="sec-title anim-text-glow">💌 گنجینه جمله‌های تبریک</h2>
+    <div class="row wrap">
+      <select id="textCat">
+        <option value="birthday">تولد</option>
+        <option value="nowruz">نوروز</option>
+        <option value="love">عاشقانه</option>
+        <option value="thanks">تشکر</option>
+        <option value="religious">مذهبی</option>
+        <option value="funny">طنز</option>
+      </select>
+      <button class="btn sm primary" id="btnRandomText">🎲 جمله تصادفی</button>
+      <button class="btn sm" id="btnUseText">✅ استفاده در کارت</button>
+    </div>
+    <p id="quoteBox" class="quote anim-fade">روی «جمله تصادفی» بزن… ✨</p>
+  </section>
+
+  <!-- ===== نمونه‌کارت‌ها (۱۰۰ عدد) ===== -->
+  <section id="tab-samples" class="tab">
+    <h2 class="sec-title anim-text-glow">💯 ۱۰۰ نمونه‌کارت آماده</h2>
+    <p class="hint center">یکی را انتخاب کن تا مستقیم در سازنده باز شود و ویرایشش کنی ✨ (🔒 = پرمیوم)</p>
+    <div class="row wrap">
+      <input id="sampleSearch" placeholder="🔍 جست‌وجو در نمونه‌ها… (مثلاً تولد، مادر)">
+      <select id="sampleOcc"><option value="">همه مناسبت‌ها</option></select>
+    </div>
+    <div id="samplesGrid" class="tpl-grid"></div>
+  </section>
+
+  <!-- ===== عکس‌ها (۱۰۰ عدد) ===== -->
+  <section id="tab-photos" class="tab">
+    <h2 class="sec-title anim-text-glow">📷 ۱۰۰ عکس نمونه زیبا</h2>
+    <p class="hint center">هر عکس را «پس‌زمینه» یا «قاب‌عکس» کارت کن ✨ (🔒 = پرمیوم)</p>
+    <div id="photosGrid" class="photo-grid"></div>
+  </section>
+
+  <!-- ===== کارت‌های من ===== -->
+  <section id="tab-gallery" class="tab">
+    <h2 class="sec-title anim-text-glow">📁 کارت‌های ذخیره‌شده من</h2>
+    <div id="myGallery" class="tpl-grid"></div>
+    <div class="ad-slot" id="adSlot">
+      📢 جایگاه تبلیغات (تپسل / یکتانت) — شناسه Zone را در <code>premium.js</code> بگذار
+    </div>
+  </section>
+
+  <!-- ===== درباره (خلاصه + لینک صفحه کامل) ===== -->
+  <section class="about-teaser">
+    <div class="teaser-card">
+      <div class="teaser-emojis">🎉 ✨ 💜 🚀 🌸</div>
+      <h2 class="anim-text-rainbow">سازنده: مهندس سید مهدی حسینی</h2>
+      <p class="anim-fade">روی دکمه زیر بزن و وارد دنیای رنگی صفحه «درباره» شو — پر از انیمیشن، کاراکتر و انرژی مثبت! 🎊</p>
+      <a href="about.html" class="btn primary big">✨ ورود به صفحه درباره ✨</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <p class="anim-fade">ساخته‌شده با 💜 توسط <b>مهندس سید مهدی حسینی</b> | <a href="about.html">درباره</a> | نسخه ۱٫۰ — ویندوز و اندروید</p>
+</footer>
+
+<!-- ===== مودال پرمیوم ===== -->
+<div id="vipModal" class="modal hidden">
+  <div class="modal-card">
+    <button class="modal-x" id="vipClose">✖</button>
+    <h2 class="anim-text-rainbow">💎 تبریک‌ساز پرمیوم</h2>
+    <ul class="vip-list">
+      <li>🚫 حذف واترمارک از خروجی</li>
+      <li>📸 ۲۵ عکس اختصاصی + 💯 نمونه‌کارت ویژه</li>
+      <li>🖨️ خروجی 4K و ویدیویی</li>
+      <li>🚫 بدون تبلیغات + 🎁 قالب‌های مناسبتی زودتر از همه</li>
+    </ul>
+    <div class="plan-grid">
+      <button class="plan" data-plan="monthly"><b>ماهانه</b><span>۳۹٬۰۰۰ تومان</span></button>
+      <button class="plan hot" data-plan="yearly"><b>سالانه ⭐</b><span>۲۹۹٬۰۰۰ تومان</span></button>
+      <button class="plan" data-plan="forever"><b>دائمی 👑</b><span>۴۹۹٬۰۰۰ تومان</span></button>
+    </div>
+    <div class="row wrap">
+      <button class="btn sm primary" data-pay="bazaar">🛒 پرداخت با کافه‌بازار</button>
+      <button class="btn sm primary" data-pay="myket">🛒 پرداخت با مایکت</button>
+      <button class="btn sm" data-pay="zarinpal">💳 زرین‌پال (وب)</button>
+    </div>
+    <div class="row">
+      <input id="vipCode" placeholder="کد فعال‌سازی داری؟ (دمو: SMH-VIP-2026)">
+      <button class="btn sm gold" id="vipActivate">✅ فعال‌سازی</button>
+    </div>
+    <p class="hint">در نسخه وب، پرداخت واقعی در اپ فروشگاهی (بازار/مایکت) انجام می‌شود — نقطه اتصال در <code>premium.js</code> آماده است.</p>
+  </div>
+</div>
+
+<script src="photos.js"></script>
+<script src="samples.js"></script>
+<script src="app.js"></script>
+<script src="pro.js"></script>
+<script src="premium.js"></script>
+</body>
+</html>

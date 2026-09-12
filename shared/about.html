@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#7c3aed">
+<title>✨ درباره سازنده | تبریک‌ساز SMH</title>
+<link rel="stylesheet" href="about.css">
+</head>
+<body>
+<canvas id="stars"></canvas>
+<div id="emojiRain"></div>
+<div class="aurora"><span></span><span></span><span></span></div>
+
+<!-- نوار بالا -->
+<nav class="glass-nav anim-drop">
+  <a href="index.html" class="back">🏠 بازگشت به برنامه</a>
+  <div class="nav-mascots"><span>🎉</span><span>✨</span><span>💜</span><span>🚀</span><span>🌸</span></div>
+</nav>
+
+<!-- هیرو -->
+<header class="hero">
+  <div class="mascot-orbit">
+    <span style="--i:0">🎂</span><span style="--i:1">🎈</span><span style="--i:2">❤️</span><span style="--i:3">🌸</span><span style="--i:4">⭐</span><span style="--i:5">🎁</span><span style="--i:6">🦋</span><span style="--i:7">✨</span>
+    <div class="avatar">👨‍💻</div>
+  </div>
+  <h1 class="wave-text" data-text="سلام رفیق! 👋">سلام رفیق! 👋</h1>
+  <h2 class="glow-text">به دنیای رنگی <span class="rainbow-text">تبریک‌ساز SMH</span> خوش آمدی 🎊</h2>
+  <!-- متن روحیه‌دهنده تایپ‌شونده -->
+  <p class="type-box"><span id="typewriter"></span><span class="caret">▌</span></p>
+  <div class="marquee"><div class="marquee-in">
+    🌸 تو خالق شادی هستی ✨ هر کارت یک لبخند 💜 بدرخش، بساز، شاد کن 🚀 عشق را پخش کن 🎁 تولدت مبارک یعنی زندگی مبارک 🎉&nbsp;
+    🌸 تو خالق شادی هستی ✨ هر کارت یک لبخند 💜 بدرخش، بساز، شاد کن 🚀 عشق را پخش کن 🎁 تولدت مبارک یعنی زندگی مبارک 🎉&nbsp;
+  </div></div>
+  <div class="hero-btns">
+    <a class="btn-bounce" href="index.html">🎨 بزن بریم بسازیم!</a>
+    <button class="btn-bounce alt" id="celebrateBtn">🎆 جشن بگیر!</button>
+  </div>
+</header>
+
+<!-- پیام انگیزشی -->
+<section class="glass sec anim-rise">
+  <h2 class="sec-title float-text">💌 یک حرف دل با تو، دوست عزیز 💌</h2>
+  <p class="glow-p">این برنامه فقط یک ابزار نیست… یک <b class="rainbow-text">جعبه جادویی لبخند</b> است! 🪄</p>
+  <p class="rise-p">تو با هر کارتی که می‌سازی، داری به یک نفر می‌گی: <b>«تو برایم مهمی!»</b> و این قشنگ‌ترین جمله دنیاست. 🌍❤️</p>
+  <p class="wave-p">پس ناامید نشو، ادامه بده، خلق کن! دنیا به آدم‌هایی مثل تو نیاز دارد — آدم‌هایی که بلدند شادی بسازند. 🚀🌟</p>
+  <div class="affirm-row">
+    <span class="affirm">🌟 تو کافی هستی</span>
+    <span class="affirm">🎨 خلاقیت تو بی‌نهایت است</span>
+    <span class="affirm">💪 امروز بهتر از دیروزی</span>
+    <span class="affirm">❤️ مهربانی‌ات دنیا را عوض می‌کند</span>
+  </div>
+</section>
+
+<!-- کارت سازنده -->
+<section class="sec">
+  <h2 class="sec-title float-text">👑 خالق این دنیای رنگی 👑</h2>
+  <div class="creator-card" id="tiltCard">
+    <div class="creator-shine"></div>
+    <div class="creator-top">
+      <div class="creator-avatar">👨‍💻<span class="status-dot"></span></div>
+      <div>
+        <h3 class="glow-text">مهندس سید مهدی حسینی</h3>
+        <p class="typing-loop rainbow-text">Seyed Mehdi Hosaini • Software Engineer • AI Developer 🚀</p>
+        <div class="badges">
+          <span class="badge pop">💻 مهندس نرم‌افزار</span>
+          <span class="badge pop">🤖 هوش مصنوعی</span>
+          <span class="badge pop">🎨 عاشق خلق شادی</span>
+          <span class="badge pop">🌍 ایران ❤️</span>
+        </div>
+      </div>
+    </div>
+    <div class="contact-grid">
+      <a class="contact shimmer" href="mailto:dev.smh.ai@gmail.com">📧<b>ایمیل</b><span class="ltr">dev.smh.ai@gmail.com</span></a>
+      <a class="contact shimmer" href="tel:+989024912785">📱<b>تلفن</b><span class="ltr">+98 902 491 2785</span></a>
+      <a class="contact shimmer" href="https://github.com/SMH-AI-Dev" target="_blank" rel="noopener">🐙<b>گیت‌هاب</b><span class="ltr">github.com/SMH-AI-Dev</span></a>
+      <button class="contact shimmer" id="copyEmail">📋<b>کپی ایمیل</b><span>بزن کپی می‌شود!</span></button>
+    </div>
+    <p class="creator-msg wave-p">«من این برنامه را ساختم تا هیچ تولد، عید و لبخندی فراموش نشود. اگر با آن یک نفر را خوشحال کردی، من به آرزویم رسیده‌ام!» 💜 — مهدی</p>
+    <div class="skills">
+      <div class="skill"><span>💜 عشق به کاربر</span><div class="bar"><i style="--w:100%"></i></div></div>
+      <div class="skill"><span>🎨 خلاقیت</span><div class="bar"><i style="--w:95%"></i></div></div>
+      <div class="skill"><span>🤖 هوش مصنوعی</span><div class="bar"><i style="--w:90%"></i></div></div>
+      <div class="skill"><span>🚀 انرژی مثبت</span><div class="bar"><i style="--w:999%"></i></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- آمار شناور -->
+<section class="stats sec">
+  <div class="stat bounce-in"><b class="count" data-n="400">0</b><span class="pulse-text">✨ قابلیت documented</span></div>
+  <div class="stat bounce-in"><b class="count" data-n="14">0</b><span class="pulse-text">🎭 مناسبت آماده</span></div>
+  <div class="stat bounce-in"><b class="count" data-n="30">0</b><span class="pulse-text">😍 استیکر متحرک</span></div>
+  <div class="stat bounce-in"><b class="count" data-n="100">0</b><span class="pulse-text">💜 درصد عشق</span></div>
+</section>
+
+<!-- شخصیت‌ها -->
+<section class="sec anim-rise">
+  <h2 class="sec-title float-text">🎭 دوستان رنگی ما 🎭</h2>
+  <div class="chars">
+    <div class="char">🎂<b class="jumpy">کیکی</b><small class="fade-p">عاشق تولدهاست!</small></div>
+    <div class="char">🦋<b class="jumpy">پروانه</b><small class="fade-p">پیام‌آور شادی!</small></div>
+    <div class="char">🧸<b class="jumpy">تدی</b><small class="fade-p">بغل مجازی رایگان!</small></div>
+    <div class="char">🐣<b class="jumpy">جوجه</b><small class="fade-p">تازه از تخم درآمده!</small></div>
+    <div class="char">🤖<b class="jumpy">رباتی</b><small class="fade-p">دستیار تبریک تو!</small></div>
+    <div class="char">🌙<b class="jumpy">ماهی</b><small class="fade-p">نگهبان آرزوها!</small></div>
+  </div>
+</section>
+
+<footer class="glass anim-rise">
+  <p class="marquee-sm"><span>💜 ساخته‌شده با عشق توسط مهندس سید مهدی حسینی ✨ Seyed Mehdi Hosaini 🚀 dev.smh.ai@gmail.com 📱 +98 902 491 2785 🐙 github.com/SMH-AI-Dev 🎉&nbsp;&nbsp;</span></p>
+  <a href="index.html" class="btn-bounce">🏠 برگردیم به کارت‌ساز</a>
+</footer>
+
+<script src="about.js"></script>
+</body>
+</html>
