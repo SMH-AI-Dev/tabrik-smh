@@ -49,8 +49,7 @@ jobs:
           path: windows/dist/*.AppImage
 
   android:
-    # نسخه تستی (دیباگ) برای نصب مستقیم و تست — انتشار فروشگاهی (بازار/مایکت)
-    # بعد از ساخت keystore و حساب‌ها، به assembleRelease امضاشده ارتقا می‌یابد
+    # APK امضاشده Release با کلید smh (از Secrets) — قابل آپلود در بازار/مایکت + نصب مستقیم برای تست
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -65,9 +64,22 @@ jobs:
       - run: npx cap add android
       - run: npx cap sync android
       - run: chmod +x android/gradlew
-      - run: ./gradlew assembleDebug
+      - run: ./gradlew assembleRelease
         working-directory: android
+      - name: Sign release APK
+        run: |
+          echo "$ANDROID_KEYSTORE_BASE64" | base64 --decode > /tmp/smh.keystore
+          BT=$(ls "$ANDROID_HOME/build-tools" | tail -1)
+          UNSIGNED=$(ls android/app/build/outputs/apk/release/*-unsigned.apk android/app/build/outputs/apk/release/*.apk 2>/dev/null | head -1)
+          echo "Unsigned: $UNSIGNED | build-tools: $BT"
+          "$ANDROID_HOME/build-tools/$BT/zipalign" -v -p 4 "$UNSIGNED" /tmp/app-aligned.apk
+          "$ANDROID_HOME/build-tools/$BT/apksigner" sign --ks /tmp/smh.keystore --ks-pass:env KEYSTORE_PASSWORD --key-pass:env KEY_PASSWORD --out Tabrik-SMH-Android.apk /tmp/app-aligned.apk
+          "$ANDROID_HOME/build-tools/$BT/apksigner" verify --print-certs Tabrik-SMH-Android.apk
+        env:
+          ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
       - uses: actions/upload-artifact@v4
         with:
-          name: Tabrik-SMH-Android-TEST-ONLY
-          path: android/app/build/outputs/apk/debug/*.apk
+          name: Tabrik-SMH-Android-Release
+          path: Tabrik-SMH-Android.apk
