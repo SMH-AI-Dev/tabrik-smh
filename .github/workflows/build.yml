@@ -49,6 +49,8 @@ jobs:
           path: windows/dist/*.AppImage
 
   android:
+    # نسخه تستی (دیباگ) برای نصب مستقیم و تست — انتشار فروشگاهی (بازار/مایکت)
+    # بعد از ساخت keystore و حساب‌ها، به assembleRelease امضاشده ارتقا می‌یابد
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -67,5 +69,5 @@ jobs:
         working-directory: android
       - uses: actions/upload-artifact@v4
         with:
-          name: Tabrik-SMH-Android
+          name: Tabrik-SMH-Android-TEST-ONLY
           path: android/app/build/outputs/apk/debug/*.apk
