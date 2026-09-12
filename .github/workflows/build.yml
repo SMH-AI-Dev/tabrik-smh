@@ -63,6 +63,22 @@ jobs:
       - run: npm install @capacitor/core @capacitor/cli @capacitor/android
       - run: npx cap add android
       - run: npx cap sync android
+      - name: Fix Kotlin stdlib duplicates
+        run: |
+          python3 - <<'EOF'
+          p = 'android/build.gradle'
+          s = open(p, encoding='utf-8').read()
+          fix = ("\nallprojects {\n    configurations.all {\n"
+                 "        exclude group: 'org.jetbrains.kotlin', module: 'kotlin-stdlib-jdk7'\n"
+                 "        exclude group: 'org.jetbrains.kotlin', module: 'kotlin-stdlib-jdk8'\n"
+                 "    }\n}\n")
+          if 'kotlin-stdlib-jdk8' not in s:
+              s += fix
+              open(p, 'w', encoding='utf-8').write(s)
+              print('patched')
+          else:
+              print('already patched')
+          EOF
       - run: chmod +x android/gradlew
       - run: ./gradlew assembleRelease
         working-directory: android
