@@ -1,7 +1,11 @@
 node_modules/
 windows/dist/
 windows/node_modules/
-android/
+android/app/
+android/.gradle/
+android/build/
+android/local.properties
+android/capacitor-cordova-android-plugins/
 android-app/
 *.keystore
 __pycache__/

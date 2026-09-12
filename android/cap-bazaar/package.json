@@ -1,0 +1,7 @@
+{
+  "name": "@smh/cap-bazaar-billing",
+  "version": "1.0.0",
+  "description": "پل نیتیو پرداخت درون‌برنامه‌ای کافه‌بازار برای تبریک‌ساز SMH (Capacitor)",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts"
+}
