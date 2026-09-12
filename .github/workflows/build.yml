@@ -84,6 +84,17 @@ jobs:
         run: echo "$ANDROID_KEYSTORE_BASE64" | base64 --decode > /tmp/smh.keystore
         env:
           ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+      - name: Debug keystore integrity (no secrets printed)
+        run: |
+          echo "size: $(stat -c%s /tmp/smh.keystore) (expect 2706)"
+          sha256sum /tmp/smh.keystore
+          echo "storepass len: ${#KEYSTORE_PASSWORD} (expect 24)"
+          echo "keypass len: ${#KEY_PASSWORD} (expect 24)"
+          echo "alias: [$KEY_ALIAS]"
+        env:
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
       - name: Inject release signing (Gradle)
         run: |
           grep -n -A8 'buildTypes' android/app/build.gradle | head -20
